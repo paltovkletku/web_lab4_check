@@ -7,9 +7,13 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/id/:n', async (req, res) => {
-  const response = await fetch(`https://nd.kodaktor.ru/users/${req.params.n}`);
-  const json = await response.json();
-  res.send(json.login);
+  try {
+    const response = await fetch(`https://nd.kodaktor.ru/users/${req.params.n}`);
+    const json = await response.json();
+    res.send(json.login);
+  } catch (e) {
+    res.status(500).send('error');
+  }
 });
 
 app.listen(process.env.PORT || 3000);
